@@ -89,6 +89,10 @@ The `/api/MatchContent/` endpoints serve multiplayer savegames and replays: the 
 remaining players download it to restore the match. Without them the game fails with "Failed to upload/download
 custom files".
 
+The MatchContent fix in this fork was successfully tested restoring and resuming a saved match with two
+human players and two AI players on macOS through CrossOver Preview (AoE2 DE `101.103.548000.0`).
+See [protocol evidence and validation results](../docs/MATCHCONTENT.md) for the implementation and test scope.
+
 Files are stored under a per-game folder (by default `<TEMP>\ageLANServer\custom-files\<game>`), evicted least
 recently first to stay under the accumulated quota, and swept after the configured TTL. A `.part` file is used
 while uploading; it is renamed into place once the `matchId` is known, so a crash mid-upload leaves at most an

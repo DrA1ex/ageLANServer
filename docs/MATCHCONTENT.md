@@ -5,8 +5,7 @@ No new pull request is associated with this branch.
 
 ## Evidence and scope
 
-The locally available AoE2 DE executable reports build 185872
-(101.103.54800.0). Its SHA-256 is
+The locally available AoE2 DE executable reports build 185872. Its SHA-256 is
 `124744bf4ae0d3856238e00d61fe321d47fcd3c0d7dfcd175c6c76aa9fb458ff`.
 The archived EXE and installed EXE have the same digest. Some networking
 functions contain encrypted bytes on disk. The conclusions below come from
@@ -77,18 +76,30 @@ are stronger correlation than the displayed timestamps alone.
 The earlier `{isError:false}` upload change was only a hypothesis. Loaded-code
 analysis now supports it, and also identifies the missing metadata stage.
 
-## Validation limits
+## Validation
+
+### Completed multiplayer restoration (2026-10-18)
+
+The tester confirmed successful restoration of a saved multiplayer match on
+macOS using CrossOver Preview, with game version **101.103.548000.0**. The match
+had **two human players and two AI players**. The save was transferred to the
+second computer, loaded successfully, and the players resumed playing.
+This is a user-reported complete game test, beyond reaching the menu or lobby.
+
+The local server access log from the corresponding session independently records
+all three transfer stages with HTTP 200: the upload response (18 bytes), JSON
+metadata response (210 bytes), and separate save payload (1,261,799 bytes).
+Raw logs and the save are kept private. This validates the tested macOS setup;
+Windows, Linux, other game versions and other player counts have not been
+tested in this investigation.
+
+### Automated and build checks
 
 Tests cover HTTP/HTTPS upload → JSON metadata → separate file download, exact
 bytes, length, independent CRC and MD5 vectors, Unicode names, missing/invalid
 ids, quotas, replacement, stale URLs, concurrent open/overwrite and bounded
 logging. Existing router tests continue to cover all registered games, but the
 actual client contract was analyzed only for the AoE2 DE build above.
-
-A complete end-to-end claim requires two game clients to restore the same saved
-multiplayer match and resume play. Automated HTTP tests, a game reaching its
-menu, or even a successful host upload do not establish that result.
-
 
 Validation commands on macOS arm64 with Go 1.27.2:
 
