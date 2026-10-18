@@ -100,6 +100,12 @@ leftovers are no longer reachable and are only reclaimed by that later startup. 
 run outside the global body-size cap, and the upload raises the read deadline for its own request; bodies larger
 than 4 KiB are left out of the communication log rather than base64-encoded into a multi-megabyte line.
 
+AoE2 DE expects JSON acknowledgements for uploads and a `fileList` manifest for downloads. Each
+manifest entry contains `fileName`, `fileSize`, a hexadecimal CRC-32/IEEE `fileCRC`, and an absolute
+`filePath` URL. The payload is downloaded separately from that URL. A bare HTTP 200 or raw payload
+at the metadata endpoint does not satisfy this client contract. See [protocol evidence and validation
+limits](../docs/MATCHCONTENT.md).
+
 See the `[CustomFiles]` section of [`config.toml`](resources/config/config.toml).
 
 ### Cloud
